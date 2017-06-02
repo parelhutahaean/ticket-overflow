@@ -158,9 +158,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         purchase(id){
           axios.get(`http://localhost:3000/getItem/${id}`)
           .then(response=>{
-            var oldItems = JSON.parse(localStorage.getItem('cart')) || []
+            var oldItems = JSON.parse(localStorage.getItem('destinations')) || []
             oldItems.push(response.data)
-            localStorage.setItem('cart',JSON.stringify(oldItems))
+            localStorage.setItem('destinations',JSON.stringify(oldItems))
             window.location = 'shop.html'
           })
           .catch(err=>{
