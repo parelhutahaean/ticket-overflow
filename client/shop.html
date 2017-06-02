@@ -124,7 +124,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<!-- <span class="reducedfrom">$66.00</span> -->
 						<span class="actual">${{d.price}}</span><br>
 						<ul class="buttons">
-							<li class="cart"><a href="#" v-on:click="purchase(d._id)">im going here</a></li>
+							<li class="cart"><a href="#" v-on:click="confirm(d._id)">im going here</a></li>
 							<div class="clear"> </div>
 					    </ul>
 				    </div>
@@ -167,6 +167,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             console.log('error addtoCart');
             console.log(err)
           })
+        },
+        confirm(id) {
+        if (confirm(`Are You Sure You Want To Select This Destination?`)) {
+           this.purchase(id)
+        } else {
+          return false;
+          }
         }
       },
       created: function(){
