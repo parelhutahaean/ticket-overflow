@@ -133,7 +133,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <td>{{d.price}}</td>
           </tr>
         </tbody>
-        <h3>Total Price: </h3>
+        <h3>Total Price: {{countTotalPrice}}</h3>
       </table>
       
 			   <form v-for="flight in flights">
@@ -163,8 +163,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             self.flights = response.data
           })
         },
-        getAirport(){
-          
+        countTotalPrice(){
+          var destinations = this.listDestinations();
+          var total = destinations.reduce((acc, curr, idx) => {
+            return acc + curr.price
+          }, 0)
         }
       },
       created: function(){
