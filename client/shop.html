@@ -24,14 +24,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             $(".dropdown dt a").click(function() {
                 $(".dropdown dd ul").toggle();
             });
-                        
+
             $(".dropdown dd ul li a").click(function() {
                 var text = $(this).html();
                 $(".dropdown dt a span").html(text);
                 $(".dropdown dd ul").hide();
                 $("#result").html("Selected value is: " + getSelectedValue("sample"));
             });
-                        
+
             function getSelectedValue(id) {
                 return $("#" + id).find("dt a span.value").html();
             }
@@ -56,17 +56,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="row">
 			  <div class="col-md-12">
           <div class="header-left">
-             <div class="menu">	
+             <div class="menu">
  						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
  						    <ul class="nav" id="nav">
                    <li><a href="index.html"><img src="images/logo.png" alt=""/></a></li>
  						    	<!-- <li class ="current"><a href="shop.html">Destinations</a></li> -->
  						    	<li><a href="experiance.html">Select Country</a></li>
- 								  <li><a href="contact.html">Contact</a></li>								
+ 								  <li><a href="contact.html">Contact</a></li>
  								<div class="clear"></div>
  							</ul>
  							<script type="text/javascript" src="js/responsive-nav.js"></script>
- 				    </div>							
+ 				    </div>
  	    		    <div class="clear"></div>
  	    	    </div>
 	            <div class="header_right">
@@ -114,10 +114,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      <div class="main">
       <div class="shop_top">
 		<div class="container">
-			<div class="row shop_box-top">
+			<div class="row shop_box-top" v-for="d in destinations">
 				<div class="col-md-3 shop_box">
-					<img src="images/pic5.jpg" class="img-responsive" alt=""/>
-					<div class="shop_desc" v-for="d in destinations">
+					<img :src="d.image" class="img-responsive" alt=""/>
+					<div class="shop_desc" >
 						<h3><a href="#">{{d.name}}</a></h3>
 						<p>{{d.city}}</p>
 						<!-- <span class="reducedfrom">$66.00</span> -->
@@ -144,7 +144,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           var self = this;
           var country = localStorage.getItem('country')
           if(country !== null){
-            axios.get(`http://localhost:3000/destinations/${country}`){
+            axios.get(`http://localhost:3000/destination?country=${country}`){
               .then(response=>{
                 self.destinations = response.data
               })
@@ -152,7 +152,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 console.log(err);
               })
             }
-          }   
+          }
         },
         purchase(id){
           axios.get(`http://localhost:3000/getItem/${id}`)
@@ -185,5 +185,5 @@ License URL: http://creativecommons.org/licenses/by/3.0/
       }
     })
   </script>
-</body>	
+</body>
 </html>

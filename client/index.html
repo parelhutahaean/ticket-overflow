@@ -30,14 +30,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             $(".dropdown dt a").click(function() {
                 $(".dropdown dd ul").toggle();
             });
-                        
+
             $(".dropdown dd ul li a").click(function() {
                 var text = $(this).html();
                 $(".dropdown dt a span").html(text);
                 $(".dropdown dd ul").hide();
                 $("#result").html("Selected value is: " + getSelectedValue("sample"));
             });
-                        
+
             function getSelectedValue(id) {
                 return $("#" + id).find("dt a span.value").html();
             }
@@ -56,23 +56,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      </script>
 </head>
 <body>
-<div id="app">  
+<div id="app">
 	<div class="header">
 		<div class="container">
 			<div class="row">
 			  <div class="col-md-12">
 				 <div class="header-left">
-            <div class="menu">	
+            <div class="menu">
 						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
 						    <ul class="nav" id="nav">
                   <li><a href="index.html"><img src="images/logo.png" alt=""/></a></li>
 						    	<!-- <li><a href="shop.html">Destinations</a></li> -->
 						    	<li><a href="experiance.html">Select Country</a></li>
-								  <li><a href="contact.html">Contact</a></li>								
+								  <li><a href="contact.html">Contact</a></li>
+                  <li><button id="fb-login" type="button" onclick="login()" name="button">Login</button></li>
 								<div class="clear"></div>
 							</ul>
 							<script type="text/javascript" src="js/responsive-nav.js"></script>
-				    </div>							
+				    </div>
 	    		    <div class="clear"></div>
 	    	    </div>
 	            <div class="header_right">
@@ -122,7 +123,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- start slider -->
        <div id="fwslider">
          <div class="slider_container">
-            <div class="slide"> 
+            <div class="slide">
                 <!-- Slide image -->
                <img src="images/slider1.jpg" class="img-responsive" alt=""/>
                 <!-- /Slide image -->
@@ -166,6 +167,66 @@ License URL: http://creativecommons.org/licenses/by/3.0/
        <!--/slider -->
       </div>
     </div>
+
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '635065596679302',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v2.9'
+        });
+        // FB.getLoginStatus(function(response) {
+        //   console.log(response);
+        //   if (response.status === 'connected') {
+        //     FB.api('/me', {fields: 'id,name,email'}, function(response) {
+        //       var x = document.getElementById("fb-login");
+        //       x.innerHTML = 'Logout';
+        //       x.setAttribute( "onclick", "logout()" );
+        //     });
+        //   }
+        // });
+        FB.AppEvents.logPageView();
+      };
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+      let login = ()=>{
+        FB.login(function(response) {
+          FB.api('/me', {fields: 'id,name,email'}, function(response2) {
+            axios.post('http://localhost:3000/user',response2)
+            .then(token=>{
+              localStorage.setItem('token',token)
+              checkToken()
+              console.log(token);
+            })
+            .catch(err=>{
+              console.log(err);
+            })
+            var x = document.getElementById("fb-login");
+            x.innerHTML = 'Logout';
+            x.setAttribute( "onclick", "logout()" );
+          });
+        }, {scope:'public_profile email'});
+      }
+      let logout = ()=>{
+        FB.logout(function(response) {
+          console.log('successfully logged out');
+          window.location="/"
+        })
+      }
+      let checkToken = ()=>{
+        if(localStorage.getItem('token')){
+          console.log('a',localStorage.getItem('token'));
+        } else {
+          console.log('b',localStorage.getItem('token'));
+        }
+      }
+    </script>
     <script type="text/javascript">
       var checkout = new Vue({
         el:'#app',
@@ -183,7 +244,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             })
           },
           getAirport(){
-            
+
           }
         },
         created: function(){
@@ -195,6 +256,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           }
         }
       })
-    </script>  
-</body>	
+    </script>
+</body>
 </html>
