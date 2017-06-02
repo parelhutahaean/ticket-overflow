@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>tes</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <h1>Test test</h1>
+  <body>
+    <button id="fb-login" type="button" onclick="login()" name="button">Login</button>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '635065596679302',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v2.9'
+        });
+        FB.getLoginStatus(function(response) {
+          console.log(response);
+          if (response.status === 'connected') {
+            FB.api('/me', {fields: 'id,name,email'}, function(response) {
+              var x = document.getElementById("fb-login");
+              x.innerHTML = 'Logout';
+              x.setAttribute( "onclick", "logout()" );
+            });
+          }
+        });
+        FB.AppEvents.logPageView();
+      };
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+      let login = ()=>{
+        FB.login(function(response) {
+          FB.api('/me', {fields: 'id,name,email'}, function(response2) {
+            axios.post('http://localhost:3000/user',response2)
+            .then(user=>{
+              console.log(user.data);
+            })
+            .catch(err=>{
+              console.log(err);
+            })
+            var x = document.getElementById("fb-login");
+            x.innerHTML = 'Logout';
+            x.setAttribute( "onclick", "logout()" );
+            // window.location="/"
+          });
+        }, {scope:'public_profile email'});
+      }
+      let logout = ()=>{
+        FB.logout(function(response) {
+          console.log('successfully logged out');
+          window.location="/"
+        })
+      }
+    </script>
+  </body>
+</html>

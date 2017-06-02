@@ -10,7 +10,7 @@ methods.insert = (req, res) => {
 }
 
 methods.findAll = (req, res) => {
-  Destination.find({}, (err, destinations) => {
+  Destination.find({country: req.query.country}, (err, destinations) => {
     if(err) res.send({err})
     res.send(destinations)
   })

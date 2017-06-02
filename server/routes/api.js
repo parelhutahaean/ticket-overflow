@@ -3,10 +3,14 @@ const router = express.Router();
 const axios = require('axios');
 const destinationController = require('../controllers/destination');
 const flightController = require('../controllers/flight')
+const userController = require('../controllers/user');
 
 router.get('/', (req, res) => {
   res.send('Welcome to TicketOverflow');
 })
+
+// NOTE: User API
+router.post('/user', userController.insert)
 
 // NOTE: Destination API
 router.post('/destination', destinationController.insert)
