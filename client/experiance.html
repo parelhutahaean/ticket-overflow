@@ -1,0 +1,241 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Free Snow Bootstrap Website Template | Experiance :: w3layouts</title>
+<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="css/style.css" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script src="js/jquery.min.js"></script>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $(".dropdown img.flag").addClass("flagvisibility");
+
+            $(".dropdown dt a").click(function() {
+                $(".dropdown dd ul").toggle();
+            });
+                        
+            $(".dropdown dd ul li a").click(function() {
+                var text = $(this).html();
+                $(".dropdown dt a span").html(text);
+                $(".dropdown dd ul").hide();
+                $("#result").html("Selected value is: " + getSelectedValue("sample"));
+            });
+                        
+            function getSelectedValue(id) {
+                return $("#" + id).find("dt a span.value").html();
+            }
+
+            $(document).bind('click', function(e) {
+                var $clicked = $(e.target);
+                if (! $clicked.parents().hasClass("dropdown"))
+                    $(".dropdown dd ul").hide();
+            });
+
+
+            $("#flagSwitcher").click(function() {
+                $(".dropdown img.flag").toggleClass("flagvisibility");
+            });
+        });
+     </script>
+    <!-- light-box -->
+	<script type="text/javascript" src="js/jquery.fancybox.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css" media="screen" />
+   <script type="text/javascript">
+		$(document).ready(function() {
+			/*
+			 *  Simple image gallery. Uses default settings
+			 */
+
+			$('.fancybox').fancybox();
+
+		});
+	</script>
+</head>
+<body>
+<div id="app">  
+	<div class="header">
+		<div class="container">
+			<div class="row">
+			  <div class="col-md-12">
+          <div class="header-left">
+             <div class="menu">	
+ 						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
+ 						    <ul class="nav" id="nav">
+                   <li><a href="index.html"><img src="images/logo.png" alt=""/></a></li>
+ 						    	<!-- <li><a href="shop.html">Destinations</a></li> -->
+ 						    	<li class ='current'><a href="experiance.html">Select Country</a></li>
+ 								  <li><a href="contact.html">Contact</a></li>								
+ 								<div class="clear"></div>
+ 							</ul>
+ 							<script type="text/javascript" src="js/responsive-nav.js"></script>
+ 				    </div>							
+ 	    		    <div class="clear"></div>
+ 	    	    </div>
+	            <div class="header_right">
+	    		  <!-- start search-->
+				   <div class="search-box">
+							<div id="sb-search" class="sb-search">
+								<form>
+									<input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
+									<input class="sb-search-submit" type="submit" value="">
+									<span class="sb-icon-search"> </span>
+								</form>
+							</div>
+						</div>
+						<!----search-scripts---->
+						<script src="js/classie.js"></script>
+						<script src="js/uisearch.js"></script>
+						<script>
+							new UISearch( document.getElementById( 'sb-search' ) );
+						</script>
+				   <ul class="icon1 sub-icon1 profile_img">
+					 <li><a class="active-icon c1" href="#"> </a>
+						<ul class="sub-icon1 list">
+						  <div class="product_control_buttons">
+						  	<a href="#"><img src="images/edit.png" alt=""/></a>
+						  		<a href="#"><img src="images/close_edit.png" alt=""/></a>
+						  </div>
+              <div class="clear" v-for="d in listDestinations">
+              <li class="list_img"><img :src="d.image" alt=""/></li>
+              <li class="list_desc"><h4>{{d.name}}</h4><span class="actual">{{d.price}}</span></li>
+              </div>
+              <div class="login_buttons">
+               <div class="check_button"><a href="checkout.html">Check out</a></div>
+							 <div class="clear"></div>
+						  </div>
+						  <div class="clear"></div>
+						</ul>
+					 </li>
+				   </ul>
+		        <div class="clear"></div>
+	       </div>
+	      </div>
+		 </div>
+	    </div>
+	  </div>
+     <div class="main">
+      <div class="shop_top">
+		<div class="container">
+			<div class="row ex_box">
+				<h3 class="m_2">Select Country</h3>
+				<div class="col-md-4 team1">
+				<div class="img_section magnifier2">
+				  <a class="fancybox" href="images/e1.jpg" data-fancybox-group="gallery" title="Dubai"><img src="images/e1.jpg" class="img-responsive" alt=""></a><span></span>
+					<a href="#" v-on:click="confirm('United Arab Emirates')"><div class="img_section_txt">
+						 United Arab Emirates
+					</div></a>
+				</div>
+				</div>
+				<div class="col-md-4 team1">
+				<div class="img_section magnifier2">
+				  <a class="fancybox" href="images/e2.jpg" data-fancybox-group="gallery" title="Paris"><img src="images/e2.jpg" class="img-responsive" alt=""></a><span> </span>
+					<a href="#" v-on:click="confirm('France')"><div class="img_section_txt">
+						France
+					</div></a>
+				</div>
+				</div>
+				<div class="col-md-4 team1">
+				<div class="img_section magnifier2">
+				  <a class="fancybox" href="images/e3.jpg" data-fancybox-group="gallery" title="Japan"><img src="images/e3.jpg" class="img-responsive" alt=""></a><span> </span>
+					<a href="#" v-on:click="confirm('Japan')"><div class="img_section_txt">
+						Japan
+					</div></a>
+				</div>
+				</div>
+		    </div>
+		    <div class="row ex_box">
+				<div class="col-md-4 team1">
+				<div class="img_section magnifier2">
+				  <a class="fancybox" href="images/e4.jpg" data-fancybox-group="gallery" title="Indonesia"><img src="images/e4.jpg" class="img-responsive" alt=""></a><span> </span>
+					<a href="#" v-on:click="confirm('Indonesia')"><div class="img_section_txt">
+						Indonesia
+					</div></a>
+				</div>
+				</div>
+				<div class="col-md-4 team1">
+				<div class="img_section magnifier2">
+				  <a class="fancybox" href="images/e5.jpg" data-fancybox-group="gallery" title="China"><img src="images/e5.jpg" class="img-responsive" alt=""></a><span> </span>
+					<a href="#" v-on:click="confirm('China')"><div class="img_section_txt">
+						China
+					</div></a>
+				</div>
+				</div>
+				<div class="col-md-4 team1">
+				<div class="img_section magnifier2">
+				  <a class="fancybox" href="images/e6.jpg" data-fancybox-group="gallery" title="Singapore"><img src="images/e6.jpg" class="img-responsive" alt=""></a><span> </span>
+					<a href="#" v-on:click="confirm('Singapore')"><div class="img_section_txt">
+						Singapore
+					</div></a>
+				</div>
+				</div>
+		    </div>
+		    <div class="row ex1_box">
+			   <div class="col-md-4 team1">
+				<div class="img_section magnifier2">
+				  <a class="fancybox" href="images/e7.jpg" data-fancybox-group="gallery" title="Antartica"><img src="images/e7.jpg" class="img-responsive" alt=""></a><span> </span>
+					<a href="#" v-on:click="confirm('Antarctica')"><div class="img_section_txt">
+						Antarctica
+					</div></a>
+				</div>
+				</div>
+				<div class="col-md-4 team1">
+				<div class="img_section magnifier2">
+				  <a class="fancybox" href="images/e8.jpg" data-fancybox-group="gallery" title="USA"><img src="images/e8.jpg" class="img-responsive" alt=""></a><span> </span>
+					<a href="#" v-on:click="confirm('United States')"><div class="img_section_txt">
+						United States
+					</div></a>
+				</div>
+				</div>
+				<div class="col-md-4 team1">
+				<div class="img_section magnifier2">
+				  <a class="fancybox" href="images/e9.jpg" data-fancybox-group="gallery" title="Australia"><img src="images/e9.jpg" class="img-responsive" alt=""></a><span> </span>
+					<a href="#" v-on:click="confirm('Australia')"><div class="img_section_txt">
+						Australia
+					</div></a>
+				</div>
+			   </div>
+		    </div>
+		 </div>
+	   </div>
+	  </div>
+  </div>
+  <script type="text/javascript">
+    var countries = new Vue({
+      el: '#app',
+      data:{
+        
+      },
+      methods:{
+        chose(country){
+          console.log(country);
+          window.location = `shop.html`
+          localStorage.setItem('country',country)
+        },
+        confirm(country) {
+        if (confirm(`Choose ${country} As Your Destination?`)) {
+           this.chose(country)
+        } else {
+          return false;
+          }
+        }
+      },
+      computed:{
+        listDestinations(){
+          return JSON.parse(localStorage.getItem('destinations'))
+        }
+      }
+    })
+  </script>
+</body>	
+</html>
