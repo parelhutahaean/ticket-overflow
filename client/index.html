@@ -68,7 +68,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                   <li><a href="index.html"><img src="images/logo.png" alt=""/></a></li>
 						    	<!-- <li><a href="shop.html">Destinations</a></li> -->
 						    	<li><a href="experiance.html">Select Country</a></li>
-								  <li><a href="contact.html">Contact</a></li>
+
                   <li><button id="fb-login" type="button" onclick="login()" name="button">Login</button></li>
 								<div class="clear"></div>
 							</ul>
@@ -132,7 +132,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="slide_content_wrap">
                         <!-- Text title -->
                         <!-- <h1 class="title">Ticket-Overflow</h1> -->
-                        <h2 class="title">Fly Over<br>Everything</h1>
+                        <h2 class="title">Ticket<br>Overflow</h1>
                         <!-- /Text title -->
                         <!-- <div class="button"><a href="#">See Details</a></div> -->
                     </div>
@@ -167,95 +167,89 @@ License URL: http://creativecommons.org/licenses/by/3.0/
        <!--/slider -->
       </div>
     </div>
-
     <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId            : '635065596679302',
-          autoLogAppEvents : true,
-          xfbml            : true,
-          version          : 'v2.9'
-        });
-        // FB.getLoginStatus(function(response) {
-        //   console.log(response);
-        //   if (response.status === 'connected') {
-        //     FB.api('/me', {fields: 'id,name,email'}, function(response) {
-        //       var x = document.getElementById("fb-login");
-        //       x.innerHTML = 'Logout';
-        //       x.setAttribute( "onclick", "logout()" );
-        //     });
-        //   }
-        // });
-        FB.AppEvents.logPageView();
-      };
-      (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-      let login = ()=>{
-        FB.login(function(response) {
-          FB.api('/me', {fields: 'id,name,email'}, function(response2) {
-            axios.post('http://localhost:3000/user',response2)
-            .then(token=>{
-              localStorage.setItem('token',token)
-              checkToken()
-              console.log(token);
-            })
-            .catch(err=>{
-              console.log(err);
-            })
-            var x = document.getElementById("fb-login");
-            x.innerHTML = 'Logout';
-            x.setAttribute( "onclick", "logout()" );
-          });
-        }, {scope:'public_profile email'});
-      }
-      let logout = ()=>{
-        FB.logout(function(response) {
-          console.log('successfully logged out');
-          window.location="/"
-        })
-      }
-      let checkToken = ()=>{
-        if(localStorage.getItem('token')){
-          console.log('a',localStorage.getItem('token'));
-        } else {
-          console.log('b',localStorage.getItem('token'));
-        }
-      }
-    </script>
-    <script type="text/javascript">
-      var checkout = new Vue({
-        el:'#app',
-        data:{
-          flights:[],
-          country:[],
-          arrival_airport:[]
-        },
-        methods:{
-          getFlight(){
-            var self = this;
-            axios.get('http://localhost:3000/flight')
-            .then(response=>{
-              self.flights = response.data
-            })
-          },
-          getAirport(){
-
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId            : '635065596679302',
+              autoLogAppEvents : true,
+              xfbml            : true,
+              version          : 'v2.9'
+            });
+          };
+          (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+          let login = ()=>{
+            FB.login(function(response) {
+              // console.log(response);
+              FB.api('/me', {fields: 'id,name,email'}, function(response2) {
+                axios.post('http://localhost:3000/user',response2)
+                .then(token=>{
+                  localStorage.setItem('token',token)
+                  console.log(token);
+                  checkToken()
+                })
+                .catch(err=>{
+                  console.log(err);
+                })
+              });
+            }, {scope:'public_profile email'});
           }
-        },
-        created: function(){
-          this.getAPIticket()
-        },
-        computed:{
-          listDestinations(){
-            return JSON.parse(localStorage.getItem('destinations'))
+          let logout = ()=>{
+            window.localStorage.clear();
+            window.location='/'
           }
-        }
-      })
-    </script>
+          let checkToken = ()=>{
+            if(localStorage.getItem('token')){
+              var x = document.getElementById("fb-login");
+              x.innerHTML = 'Logout';
+              x.setAttribute( "onclick", "logout()" );
+            }
+          }
+        </script>
+        <script type="text/javascript">
+          var checkout = new Vue({
+            el:'#app',
+            data:{
+              flights:[],
+              country:[],
+              arrival_airport:[]
+            },
+            methods:{
+              getFlight(){
+                var self = this;
+                axios.get('http://localhost:3000/flight')
+                .then(response=>{
+                  self.flights = response.data
+                })
+              },
+              getAirport(){
+              },
+              checkToken(){
+                if(localStorage.getItem('token')){
+                  var x = document.getElementById("fb-login");
+                  x.innerHTML = 'Logout';
+                  x.setAttribute( "onclick", "logout()" );
+                  console.log(localStorage);
+                } else {
+                  console.log(localStorage);
+                }
+              }
+            },
+            created: function(){
+              // this.getAPIticket()
+              this.checkToken()
+            },
+            computed:{
+              listDestinations(){
+                return JSON.parse(localStorage.getItem('destinations'))
+              }
+            }
+          })
+        </script>
 </body>
 </html>

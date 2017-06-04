@@ -93,9 +93,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						  	<a href="#"><img src="images/edit.png" alt=""/></a>
 						  		<a href="#"><img src="images/close_edit.png" alt=""/></a>
 						  </div>
-						  <div class="clear" v-for="d in listDestinations">
-						  <li class="list_img"><img :src="d.image" alt=""/></li>
-						  <li class="list_desc"><h4>{{d.name}}</h4><span class="actual">{{d.price}}</span></li>
+						  <div class="fuck" v-for="e in listDestinations">
+						  <li class="list_img"><img :src="e.image" alt=""/></li>
+						  <li class="list_desc"><h4>{{e.name}}</h4><span class="actual">{{e.price}}</span></li>
               </div>
 						  <div class="login_buttons">
 							 <div class="check_button"><a href="checkout.html">Check out</a></div>
@@ -105,7 +105,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</ul>
 					 </li>
 				   </ul>
-		        <div class="clear"></div>
 	       </div>
 	      </div>
 		 </div>
@@ -114,14 +113,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      <div class="main">
       <div class="shop_top">
 		<div class="container">
-			<div class="row shop_box-top" v-for="d in destinations">
-				<div class="col-md-3 shop_box">
+			<div class="row shop_box-top" >
+				<div class="col-md-3 shop_box" v-for="d in destinations">
 					<img :src="d.image" class="img-responsive" alt=""/>
 					<div class="shop_desc" >
 						<h3><a href="#">{{d.name}}</a></h3>
 						<p>{{d.city}}</p>
 						<!-- <span class="reducedfrom">$66.00</span> -->
 						<span class="actual">${{d.price}}</span><br>
+            <div class="clear"></div>
 						<ul class="buttons">
 							<li class="cart"><a href="#" v-on:click="confirm(d._id)">im going here</a></li>
 							<div class="clear"> </div>
@@ -135,27 +135,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   </div>
   <script type="text/javascript">
     var listHotel = new Vue({
-      el:'#app'
+      el:'#app',
       data:{
         destinations: []
       },
       methods:{
-        destinations(){
+        destination(){
           var self = this;
           var country = localStorage.getItem('country')
-          if(country !== null){
-            axios.get(`http://localhost:3000/destination?country=${country}`){
+            console.log(country);
+            axios.get(`http://localhost:3000/destination/country/${country}`)
               .then(response=>{
                 self.destinations = response.data
               })
               .catch(err=>{
                 console.log(err);
               })
-            }
-          }
         },
         purchase(id){
-          axios.get(`http://localhost:3000/getItem/${id}`)
+          console.log('masuk woi');
+          axios.get(`http://localhost:3000/destination/${id}`)
           .then(response=>{
             var oldItems = JSON.parse(localStorage.getItem('destinations')) || []
             oldItems.push(response.data)
@@ -176,7 +175,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         }
       },
       created: function(){
-        this.destinations()
+        this.destination()
       },
       computed:{
         listDestinations(){

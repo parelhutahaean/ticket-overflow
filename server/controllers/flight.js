@@ -24,7 +24,7 @@ methods.airportAll = (req, res) => {
 }
 
 methods.flightAll = (req, res) => {
-  var url = `http://api-sandbox.tiket.com/search/flight?d=${req.query.d}&a=${req.query.a}&date=${req.query.date}&adult=${req.query.adult}&child=${req.query.child}&token=${process.env.TOKEN}&v=3&output=json`
+  var url = `http://api-sandbox.tiket.com/search/flight?d=CGK&a=${req.params.destination}&date=2017-06-03&adult=1&child=0&token=${process.env.TOKEN}&v=3&output=json`
   axios.get(url)
   .then(result => {
     res.send(result.data);

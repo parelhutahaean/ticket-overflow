@@ -4,9 +4,9 @@ var Schema = mongoose.Schema;
 var destinationSchema = new Schema({
   name: String,
   image: String,
-  price: String,
+  price: Number,
   city: String,
-  country: Number
+  country: String,
 })
 
 var Destination = mongoose.model('Destination', destinationSchema)
